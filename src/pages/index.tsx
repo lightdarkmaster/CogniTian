@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
-import { Menu, Plus, User, Bot, Clipboard } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Menu, Plus, User, Bot, Clipboard, ArrowDown } from "lucide-react";
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<{ role: string; content: string }[]>(
@@ -11,6 +11,35 @@ export default function ChatPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [chats, setChats] = useState<string[]>(["Welcome Chat"]);
   const [currentChat, setCurrentChat] = useState(0);
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const chatContainerRef = useRef<HTMLDivElement | null>(null);
+
+  // Scroll to bottom whenever messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  // Show scroll button if user scrolls up
+  useEffect(() => {
+    const container = chatContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const isNearBottom =
+        container.scrollHeight - container.scrollTop - container.clientHeight <
+        100;
+      setShowScrollButton(!isNearBottom);
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -40,7 +69,7 @@ export default function ChatPage() {
           updated[updated.length - 1] = { role: "assistant", content: typed };
           return updated;
         });
-      }, 5 * i); // typing speed (ms per char)
+      }, 5 * i);
     });
   };
 
@@ -77,7 +106,6 @@ export default function ChatPage() {
 
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
           <button onClick={() => setSidebarOpen(!sidebarOpen)}>
-            {}
             <Menu className="w-6 h-6 text-gray-300" />
           </button>
           {sidebarOpen && <h2 className="font-bold text-gray-200">History</h2>}
@@ -117,9 +145,12 @@ export default function ChatPage() {
       </div>
 
       {/* Chat Area */}
-      <div className="flex flex-col flex-1 w-full h-screen">
+      <div className="flex flex-col flex-1 w-full h-screen relative">
         {/* Messages */}
-        <div className="flex-1 p-6 overflow-y-auto flex flex-col items-center">
+        <div
+          ref={chatContainerRef}
+          className="flex-1 p-6 overflow-y-auto flex flex-col items-center"
+        >
           <div className="w-full max-w-3xl space-y-6">
             {messages.map((m, i) => (
               <div
@@ -161,8 +192,19 @@ export default function ChatPage() {
                 )}
               </div>
             ))}
+            <div ref={messagesEndRef} />
           </div>
         </div>
+
+        {/* Floating Scroll-to-Bottom Button */}
+        {showScrollButton && (
+          <button
+            onClick={scrollToBottom}
+            className="absolute bottom-24 right-6 bg-green-600 p-3 rounded-full shadow-lg hover:bg-green-700 transition"
+          >
+            <ArrowDown className="w-5 h-5 text-white" />
+          </button>
+        )}
 
         {/* Input */}
         <div className="py-7 border-gray-700 bg-gray-800 flex justify-center">
