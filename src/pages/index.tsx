@@ -1,115 +1,169 @@
+"use client";
 import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+import { useState } from "react";
+import { Menu, Plus, User, Bot, Clipboard } from "lucide-react";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+export default function ChatPage() {
+  const [messages, setMessages] = useState<{ role: string; content: string }[]>(
+    []
+  );
+  const [input, setInput] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [chats, setChats] = useState<string[]>(["Welcome Chat"]);
+  const [currentChat, setCurrentChat] = useState(0);
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+  const sendMessage = async () => {
+    if (!input.trim()) return;
 
-export default function Home() {
+    const newMessages = [...messages, { role: "user", content: input }];
+    setMessages(newMessages);
+    setInput("");
+
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: newMessages }),
+    });
+
+    const data = await res.json();
+
+    setMessages([...newMessages, { role: "assistant", content: data.reply }]);
+  };
+
+  const newChat = () => {
+    setChats([...chats, `Chat ${chats.length + 1}`]);
+    setMessages([]);
+    setCurrentChat(chats.length);
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
+
   return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20`}
-    >
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/pages/index.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div className="flex h-screen bg-gray-900 text-white">
+      {/* Sidebar */}
+      <div
+        className={`${
+          sidebarOpen ? "w-64" : "w-16"
+        } bg-gray-800 border-r border-gray-700 transition-all duration-300 flex flex-col`}
+      >
+        <div className="flex items-center justify-between p-4 border-b border-gray-700">
+          {sidebarOpen && (
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src="/assets/images/cognitian (1).png"
+              alt="Logo"
+              width={100}
+              height={60}
+              className="h-100% w-100%"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="flex items-center justify-between p-4 border-b border-gray-700">
+          <button onClick={() => setSidebarOpen(!sidebarOpen)}>
+            {}
+            <Menu className="w-6 h-6 text-gray-300" />
+          </button>
+          {sidebarOpen && <h2 className="font-bold text-gray-200">History</h2>}
+        </div>
+
+        {/* Chats List */}
+        <div className="flex-1 overflow-y-auto">
+          {chats.map((chat, idx) => (
+            <button
+              key={idx}
+              onClick={() => {
+                setCurrentChat(idx);
+                setMessages([]);
+              }}
+              className={`w-full text-left px-4 py-2 hover:bg-gray-700 ${
+                currentChat === idx ? "bg-gray-700 font-semibold" : ""
+              }`}
+            >
+              {sidebarOpen ? chat : "💬"}
+            </button>
+          ))}
+        </div>
+
+        {/* New Chat Button */}
+        <div className="p-2 border-gray-700">
+          <button
+            onClick={newChat}
+            className="flex items-center justify-center w-full px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+          >
+            <Plus className="w-5 h-5 mr-2" />
+            {sidebarOpen && "New Chat"}
+          </button>
+        </div>
+      </div>
+
+      {/* Chat Area */}
+      <div className="flex flex-col flex-1">
+        {/* Messages */}
+        <div className="flex-1 p-6 overflow-y-auto flex flex-col items-center">
+          <div className="w-full max-w-3xl space-y-6">
+            {messages.map((m, i) => (
+              <div
+                key={i}
+                className={`flex items-end space-x-3 ${
+                  m.role === "user" ? "justify-end" : "justify-start"
+                }`}
+              >
+                {/* Assistant (Left side with copy) */}
+                {m.role === "assistant" && (
+                  <>
+                    <div className="bg-gray-700 p-2 rounded-full">
+                      <Bot className="w-5 h-5 text-green-400" />
+                    </div>
+                    <div className="relative p-4 rounded-2xl max-w-xl bg-gray-800 text-gray-100">
+                      {m.content}
+                      {/* Copy button */}
+                      <button
+                        onClick={() => copyToClipboard(m.content)}
+                        className="absolute top-2 right-2 text-gray-400 hover:text-white"
+                        title="Copy response"
+                      >
+                        <Clipboard className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </>
+                )}
+
+                {/* User (Right side) */}
+                {m.role === "user" && (
+                  <>
+                    <div className="p-4 rounded-2xl max-w-xl bg-green-600 text-white">
+                      {m.content}
+                    </div>
+                    <div className="bg-green-700 p-2 rounded-full">
+                      <User className="w-5 h-5 text-white" />
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Input bg-gray-800 */}
+        <div className="py-7 border-gray-700 bg-gray-800 flex justify-center">
+          <div className="flex w-full max-w-3xl items-center bg-gray-700 rounded-2xl px-3 py-2">
+            <input
+              className="flex-1 bg-transparent text-white px-3 py-2 focus:outline-none"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              placeholder="Send a message..."
+            />
+            <button
+              className="bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-green-700"
+              onClick={sendMessage}
+            >
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

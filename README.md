@@ -38,3 +38,13 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+
+## Meet Cognitian (Cognition + Christian)
+
+Cognitian is an AI assistant designed to help you with your conversations. It uses the latest advancements in natural language processing to generate human-like text based on the input it receives. Cognitian is not just a chatbot, it's a tool that can help you communicate more efficiently and effectively.
+
+The AI is built using the Gemini AI model, a powerful language model that is capable of generating coherent and context-specific text. The model is based on the latest research in the field of natural language processing and is constantly being improved and updated.
+
+Cognitian is not meant to be a replacement for human conversation, but rather a tool to help you communicate more efficiently and effectively. It can be used to generate ideas, write emails, or even create entire conversations.
+
+We hope you find Cognitian to be a useful tool in your daily conversations. If you have any feedback or suggestions, please don't hesitate to reach out.
