@@ -27,7 +27,21 @@ export default function ChatPage() {
 
     const data = await res.json();
 
-    setMessages([...newMessages, { role: "assistant", content: data.reply }]);
+    // Typing effect simulation
+    const reply = data.reply;
+    let typed = "";
+    setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+
+    reply.split("").forEach((char: string, i: number) => {
+      setTimeout(() => {
+        typed += char;
+        setMessages((prev) => {
+          const updated = [...prev];
+          updated[updated.length - 1] = { role: "assistant", content: typed };
+          return updated;
+        });
+      }, 5 * i); // typing speed (ms per char)
+    });
   };
 
   const newChat = () => {
@@ -62,8 +76,7 @@ export default function ChatPage() {
         </div>
 
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
-          <button onClick={() => setSidebarOpen(!sidebarOpen)}>
-            {}
+          <button onClick={() => setSidebarOpen(!sidebarOpen)}>{}
             <Menu className="w-6 h-6 text-gray-300" />
           </button>
           {sidebarOpen && <h2 className="font-bold text-gray-200">History</h2>}
@@ -97,7 +110,9 @@ export default function ChatPage() {
             {sidebarOpen && "New Chat"}
           </button>
         </div>
-        <p className="p-2 text-[10px] text-center text-gray-400"> Developed by: Christian Barbosa - Junior Software Developer</p>
+        <p className="p-2 text-[10px] text-center text-gray-400">
+          Developed by: Christian Barbosa - Junior Software Developer
+        </p>
       </div>
 
       {/* Chat Area */}
@@ -114,24 +129,22 @@ export default function ChatPage() {
               >
                 {/* Assistant (Left side with copy) */}
                 {m.role === "assistant" && (
-                  <>
-                    <div className="flex items-center space-x-3">
-                      <div className="bg-gray-700 p-2 rounded-full">
-                        <Bot className="w-5 h-5 text-green-400" />
-                      </div>
-                      <div className="relative p-4 rounded-2xl max-w-xl bg-gray-800 text-gray-100">
-                        <p className="whitespace-pre-wrap p-2">{m.content}</p>
-                        {/* Copy button */}
-                        <button
-                          onClick={() => copyToClipboard(m.content)}
-                          className="absolute top-2 right-2 text-gray-400 hover:text-white"
-                          title="Copy response"
-                        >
-                          <Clipboard className="w-4 h-4" />
-                        </button>
-                      </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="bg-gray-700 p-2 rounded-full">
+                      <Bot className="w-5 h-5 text-green-400" />
                     </div>
-                  </>
+                    <div className="relative p-4 rounded-2xl max-w-xl bg-gray-800 text-gray-100">
+                      <p className="whitespace-pre-wrap p-2">{m.content}</p>
+                      {/* Copy button */}
+                      <button
+                        onClick={() => copyToClipboard(m.content)}
+                        className="absolute top-2 right-2 text-gray-400 hover:text-white"
+                        title="Copy response"
+                      >
+                        <Clipboard className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
                 )}
 
                 {/* User (Right side) */}
@@ -150,7 +163,7 @@ export default function ChatPage() {
           </div>
         </div>
 
-        {/* Input bg-gray-800 */}
+        {/* Input */}
         <div className="py-7 border-gray-700 bg-gray-800 flex justify-center">
           <div className="flex w-full max-w-3xl items-center bg-gray-700 rounded-2xl px-3 py-2">
             <input
