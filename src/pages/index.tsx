@@ -64,7 +64,7 @@ export default function ChatPage() {
       >
         <div className="flex items-center justify-center p-4 border-gray-700 bg-gray-300">
           {sidebarOpen && (
-            <div className="relative w-150 h-24">
+            <div className="relative w-full h-[60px]">
               <Image
                 src="/assets/images/cognitian.png"
                 alt="Logo"
@@ -76,7 +76,8 @@ export default function ChatPage() {
         </div>
 
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
-          <button onClick={() => setSidebarOpen(!sidebarOpen)}>{}
+          <button onClick={() => setSidebarOpen(!sidebarOpen)}>
+            {}
             <Menu className="w-6 h-6 text-gray-300" />
           </button>
           {sidebarOpen && <h2 className="font-bold text-gray-200">History</h2>}
