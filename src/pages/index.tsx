@@ -48,17 +48,19 @@ export default function ChatPage() {
           sidebarOpen ? "w-64" : "w-16"
         } bg-gray-800 border-r border-gray-700 transition-all duration-300 flex flex-col`}
       >
-        <div className="flex items-center justify-between p-4 border-b border-gray-700">
+        <div className="flex items-center justify-center p-4 border-gray-700 bg-gray-300">
           {sidebarOpen && (
-            <Image
-              src="/assets/images/cognitian (1).png"
-              alt="Logo"
-              width={100}
-              height={60}
-              className="h-100% w-100%"
-            />
+            <div className="relative w-150 h-24">
+              <Image
+                src="/assets/images/cognitian.png"
+                alt="Logo"
+                fill
+                className="object-contain"
+              />
+            </div>
           )}
         </div>
+
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
           <button onClick={() => setSidebarOpen(!sidebarOpen)}>
             {}
@@ -98,7 +100,7 @@ export default function ChatPage() {
       </div>
 
       {/* Chat Area */}
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 w-full h-screen">
         {/* Messages */}
         <div className="flex-1 p-6 overflow-y-auto flex flex-col items-center">
           <div className="w-full max-w-3xl space-y-6">
@@ -112,19 +114,21 @@ export default function ChatPage() {
                 {/* Assistant (Left side with copy) */}
                 {m.role === "assistant" && (
                   <>
-                    <div className="bg-gray-700 p-2 rounded-full">
-                      <Bot className="w-5 h-5 text-green-400" />
-                    </div>
-                    <div className="relative p-4 rounded-2xl max-w-xl bg-gray-800 text-gray-100">
-                      {m.content}
-                      {/* Copy button */}
-                      <button
-                        onClick={() => copyToClipboard(m.content)}
-                        className="absolute top-2 right-2 text-gray-400 hover:text-white"
-                        title="Copy response"
-                      >
-                        <Clipboard className="w-4 h-4" />
-                      </button>
+                    <div className="flex items-center space-x-3">
+                      <div className="bg-gray-700 p-2 rounded-full">
+                        <Bot className="w-5 h-5 text-green-400" />
+                      </div>
+                      <div className="relative p-4 rounded-2xl max-w-xl bg-gray-800 text-gray-100">
+                        <p className="whitespace-pre-wrap p-2">{m.content}</p>
+                        {/* Copy button */}
+                        <button
+                          onClick={() => copyToClipboard(m.content)}
+                          className="absolute top-2 right-2 text-gray-400 hover:text-white"
+                          title="Copy response"
+                        >
+                          <Clipboard className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   </>
                 )}
