@@ -105,7 +105,7 @@ export default function ChatPage() {
         </div>
 
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
-          <button onClick={() => setSidebarOpen(!sidebarOpen)}>
+          <button onClick={() => setSidebarOpen(!sidebarOpen)}>{}
             <Menu className="w-6 h-6 text-gray-300" />
           </button>
           {sidebarOpen && <h2 className="font-bold text-gray-200">History</h2>}
@@ -201,7 +201,7 @@ export default function ChatPage() {
           <button
             onClick={scrollToBottom}
             className="absolute bottom-24 right-6 bg-green-600 p-3 rounded-full shadow-lg hover:bg-green-700 transition"
-          >
+          >{}
             <ArrowDown className="w-5 h-5 text-white" />
           </button>
         )}
