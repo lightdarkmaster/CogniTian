@@ -97,6 +97,7 @@ export default function ChatPage() {
             {sidebarOpen && "New Chat"}
           </button>
         </div>
+        <p className="p-2 text-[10px] text-center text-gray-400"> Developed by: Christian Barbosa - Junior Software Developer</p>
       </div>
 
       {/* Chat Area */}
