@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const data = await response.json();
 
-    // Gemini’s response format
+    // Gemini’s response format - mag iba hira format hit openai Notes
     const aiText =
       data?.candidates?.[0]?.content?.parts?.[0]?.text || "⚠️ No response from Gemini";
 
