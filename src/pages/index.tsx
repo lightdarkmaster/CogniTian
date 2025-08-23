@@ -204,12 +204,12 @@ export default function ChatPage() {
             className="absolute bottom-24 right-6 bg-green-600 p-3 rounded-full shadow-lg hover:bg-green-700 transition"
           >
             {}
-            <ArrowDown className="w-5 h-5 text-white" />
+            <ArrowDown className="w-5 h-5 text-white cursor-pointer" />
           </button>
         )}
 
-        {/* Input */}
-        <div className="py-7 border-gray-700 bg-gray-800 flex justify-center">
+        {/* Input  bg-gray-800 */}
+        <div className="p-5 border-gray-700 flex justify-center">
           <div className="flex w-full max-w-3xl items-center bg-gray-700 rounded-2xl px-3 py-2">
             <input
               className="flex-1 bg-transparent text-white px-3 py-2 focus:outline-none"
