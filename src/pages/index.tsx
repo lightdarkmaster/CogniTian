@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import { Menu, Plus, User, Bot, Clipboard, ArrowDown } from "lucide-react";
+import { Menu, Plus, User, Bot, Clipboard, ArrowDown, MessageCircle } from "lucide-react";
+
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<{ role: string; content: string }[]>(
@@ -125,7 +126,7 @@ export default function ChatPage() {
                 currentChat === idx ? "bg-gray-700 font-semibold" : ""
               }`}
             >
-              {sidebarOpen ? chat : "💬"}
+              {sidebarOpen ? chat : <MessageCircle />}
             </button>
           ))}
         </div>
