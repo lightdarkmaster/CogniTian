@@ -30,3 +30,71 @@ Installation
 
 The project is easy to install, with a simple command-line interface. You can install the project by running the following command:
 
+## Test API in Postman
+1. Open **Postman** → Create a new request.
+2. **Method:** `POST`
+3. Paste the Gemini Endpoint replace the key with the actual API key
+4. Go to Headers tab add "Content type"
+5. Key: Content Type
+6. Value: Application/json
+7. Body select raw options from the dropdown set the format to JSON
+8. add a sample json prompt:  
+
+```json
+{
+      "contents": [{
+        "parts": [{
+          "text": "Tell me a short joke about a cat."
+        }]
+      }]
+    }
+```
+9. advance prompt: 
+
+```json
+{
+  "contents": [
+    {
+      "parts": [
+        {
+          "text": "Tell me a short joke about a cat."
+        }
+      ]
+    }
+  ],
+  "safetySettings": [
+    {
+      "category": "HARM_CATEGORY_HARASSMENT",
+      "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+    },
+    {
+      "category": "HARM_CATEGORY_HATE_SPEECH",
+      "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+    },
+    {
+      "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+      "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+    },
+    {
+      "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+      "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+    }
+  ],
+  "generationConfig": {
+    "maxOutputTokens": 200,
+    "temperature": 0.7,
+    "topP": 0.95,
+    "topK": 40
+  }
+}
+
+
+
+```
+10. Always check the [Google AI Documentation](https://ai.google.dev/docs) for the latest endpoints.
+
+
+## Postman Setup
+1. Open **Postman** → Create a new request.
+2. **Method:** `POST`
+3. **Request URL (example):**
