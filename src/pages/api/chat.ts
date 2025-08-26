@@ -46,3 +46,5 @@ export default async function handler(
       .json({ reply: "⚠️ Error fetching response from Gemini API" });
   }
 }
+
+//end of the code..
