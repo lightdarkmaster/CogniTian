@@ -106,7 +106,7 @@ For advanced configurations, always refer to the [Google AI Documentation](https
   }
 }
 
-
+```
 ---
 
 ## Installation  
