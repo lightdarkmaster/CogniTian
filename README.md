@@ -57,7 +57,6 @@ For advanced configurations, always refer to the [Google AI Documentation](https
 6. Value: Application/json
 7. Body select raw options from the dropdown set the format to JSON
 8. add a sample json prompt:  
-
 ```json
 {
       "contents": [{
