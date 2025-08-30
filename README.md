@@ -34,7 +34,8 @@ The application is developed using **Next.js**, a modern React-based framework f
 - ✅ Powered by the **Gemini AI model** for advanced NLP capabilities.  
 - ✅ Built on **Next.js** for speed, scalability, and maintainability.  
 - ✅ **Open-source** project – customize or contribute on GitHub.  
-- ✅ Designed to be **lightweight, extensible, and developer-friendly**.  
+- ✅ Designed to be **lightweight, extensible, and developer-friendly**.
+- - ✅ Utilize Gemini API for the response of the overall system**.    
 
 ---
 
