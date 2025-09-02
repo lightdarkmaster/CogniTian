@@ -35,7 +35,7 @@ The application is developed using **Next.js**, a modern React-based framework f
 - ✅ Built on **Next.js** for speed, scalability, and maintainability.  
 - ✅ **Open-source** project – customize or contribute on GitHub.  
 - ✅ Designed to be **lightweight, extensible, and developer-friendly**.
-- - ✅ Utilize Gemini API for the response of the overall system**.    
+- ✅ Utilize Gemini API for the response of the overall system**.    
 
 ---
 
