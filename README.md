@@ -48,6 +48,9 @@ Cognitian comes with:
 
 For advanced configurations, always refer to the [Google AI Documentation](https://ai.google.dev/docs).
 
+<div>
+<img src="./screenshots/image.png">
+</div>
 ---
 ## Test API in Postman
 1. Open **Postman** → Create a new request.
